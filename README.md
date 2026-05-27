@@ -1,1 +1,1 @@
-# Logistic Scale
+# Logistic-Scale
