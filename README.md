@@ -17,8 +17,12 @@ Build a scalable production solution that can seamlessly process, analyze, and f
 
 🧠 Key Analytics Techniques
 Basic Core Metrics: Real-time tracking of active delivery statuses and current warehouse inventory levels.
-Route Efficiency Analysis: Calculating and visualizing massive-scale variances between Actual Time of Arrival (ATA) and Estimated Time of Arrival (ETA) at an individual shipment level.
-Demand Forecasting: Implementing moving average logic and more advanced time-series methods applied to millions of distinct Stock Keeping Units (SKUs) for massive dataset
+
+Route Efficiency Analysis: Calculating and visualizing massive-scale variances between Actual Time of Arrival (ATA) 
+and Estimated Time of Arrival (ETA) at an individual shipment level.
+
+Demand Forecasting: Implementing moving average logic and more advanced time-series methods 
+applied to millions of distinct Stock Keeping Units (SKUs) for massive dataset
 
 📜 Weekly Development Plan
 Week 1 - Environment & Ingestion 
