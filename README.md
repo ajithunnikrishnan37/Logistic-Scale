@@ -8,18 +8,18 @@ Global Logistics & Demand Forecasting – Logistic-Scale
 ![Status](https://img.shields.io/badge/Project-Completed-green)
 
 
-👨‍💻 Team Members
+👨‍💻 Team Members:
 
 Hridyanshi Jain – Team Lead
 Shibina Mariyam
 Ajith Unnikrishnan
 Jeevan NR
 
-📊 Project Overview
+📊 Project Overview:
 
 Build a scalable production solution that can seamlessly process, analyze, and forecast massive datasets moving well beyond the limits of local computer memory.
 
-🧠 Key Analytics Techniques
+🧠 Key Analytics Techniques:
 
 Basic Core Metrics: Real-time tracking of active delivery statuses and current warehouse inventory levels.
 
@@ -29,7 +29,7 @@ and Estimated Time of Arrival (ETA) at an individual shipment level.
 Demand Forecasting: Implementing moving average logic and more advanced time-series methods 
 applied to millions of distinct Stock Keeping Units (SKUs) for massive dataset
 
-📜 Weekly Development Plan
+📜 Weekly Development Plan:
 
 Week 1 - Environment & Ingestion 
       Planning - setup the local spark using optimised pyspark data frames
@@ -42,19 +42,19 @@ Week 3 -Visualzation Layer - Exporting the final Aggregations dataset to Power B
 Week 4 -Final Delivery - Creating Control Tower Dashboard View 
       To get Scalability ,Performnace ,Resilience of the Big Data solution
 
-🛠 Technology Stack
+🛠 Technology Stack:
 
 rimary Data Processing: PySpark 
 Storage Layer: SQL Database 
 Visualization Layer: Power BI
 Deployment/Environment: Docker or Local Standalone mode for setting up Spark.
 
-🚀 Business Impact
+🚀 Business Impact:
 
 System Stability
 Operational Efficiency
 Cost Reduction
 
-📌 Project Outcome
+📌 Project Outcome:
 
 The Logistic-Scale provides a complete analytics ,Scalability ,Performance ,Resilience from raw sales data to business insights using SQL, Python, and Power BI dashboards.
