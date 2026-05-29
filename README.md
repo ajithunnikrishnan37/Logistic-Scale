@@ -11,8 +11,11 @@ Global Logistics & Demand Forecasting – Logistic-Scale
 👨‍💻 Team Members:
 
 Hridyanshi Jain – Team Lead
+
 Shibina Mariyam
+
 Ajith Unnikrishnan
+
 Jeevan NR
 
 📊 Project Overview:
