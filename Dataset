@@ -1,0 +1,48 @@
+import pandas as pd
+import random
+from datetime import datetime, timedelta
+
+# Configuration lists for Indian logistics
+cities = {
+    'Mumbai': 'Maharashtra', 'Delhi': 'NCR', 'Bengaluru': 'Karnataka', 
+    'Chennai': 'Tamil Nadu', 'Hyderabad': 'Telangana', 'Kolkata': 'West Bengal',
+    'Ahmedabad': 'Gujarat', 'Pune': 'Maharashtra', 'Coimbatore': 'Tamil Nadu', 
+    'Jaipur': 'Rajasthan', 'Indore': 'Madhya Pradesh', 'Kochi': 'Kerala'
+}
+carriers = ['VRL Logistics', 'Safexpress', 'Blue Dart', 'TCI Freight', 'Gati Ltd']
+modes = ['FTL', 'LTL', 'Express']
+statuses = ['Delivered', 'In Transit', 'Pending']
+
+data = []
+start_date = datetime(2026, 5, 1)
+
+# Generate 1000 rows
+for i in range(1000):
+    origin, o_state = random.choice(list(cities.items()))
+    dest, d_state = random.choice([item for item in cities.items() if item[0] != origin])
+    
+    order_id = f"IN-{10001 + i}"
+    order_date = (start_date + timedelta(days=random.randint(0, 35))).strftime('%Y-%m-%d')
+    carrier = random.choice(carriers)
+    
+    # Logic to tie weight and cost loosely to shipping modes
+    mode = random.choice(modes)
+    if mode == 'Express':
+        weight = round(random.uniform(1, 100), 2)
+        cost = round(weight * random.randint(30, 50) + random.randint(200, 500), -1)
+    elif mode == 'LTL':
+        weight = random.randint(500, 8000)
+        cost = round((weight * random.uniform(3, 6)) + random.randint(2000, 5000), -2)
+    else: # FTL
+        weight = random.randint(10000, 25000)
+        cost = round(random.randint(25000, 65000), -2)
+        
+    status = random.choices(statuses, weights=[75, 18, 7], k=1)[0]
+    
+    data.append([order_id, order_date, origin, o_state, dest, d_state, carrier, mode, weight, cost, status])
+
+# Create DataFrame and save
+columns = ['Order_ID', 'Order_Date', 'Origin_City', 'State_Origin', 'Destination_City', 'State_Dest', 'Carrier', 'Shipping_Mode', 'Weight_KG', 'Shipping_Cost_INR', 'Delivery_Status']
+df = pd.DataFrame(data, columns=columns)
+df.to_excel('indian_logistics_1000.xlsx', index=False)
+print("Successfully generated 'indian_logistics_1000.xlsx' with 1,000 rows!")
