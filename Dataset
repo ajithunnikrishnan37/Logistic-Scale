@@ -1,48 +1,103 @@
 import pandas as pd
 import random
-from datetime import datetime, timedelta
 
-# Configuration lists for Indian logistics
-cities = {
-    'Mumbai': 'Maharashtra', 'Delhi': 'NCR', 'Bengaluru': 'Karnataka', 
-    'Chennai': 'Tamil Nadu', 'Hyderabad': 'Telangana', 'Kolkata': 'West Bengal',
-    'Ahmedabad': 'Gujarat', 'Pune': 'Maharashtra', 'Coimbatore': 'Tamil Nadu', 
-    'Jaipur': 'Rajasthan', 'Indore': 'Madhya Pradesh', 'Kochi': 'Kerala'
-}
-carriers = ['VRL Logistics', 'Safexpress', 'Blue Dart', 'TCI Freight', 'Gati Ltd']
-modes = ['FTL', 'LTL', 'Express']
-statuses = ['Delivered', 'In Transit', 'Pending']
+
+random.seed(42)
+
+
+cities = [
+    "Mumbai", "Delhi", "Bangalore", "Hyderabad", "Ahmedabad", "Chennai", "Kolkata", "Surat", 
+    "Pune", "Jaipur", "Lucknow", "Kanpur", "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", 
+    "Pimpri-Chinchwad", "Patna", "Vadodara", "Ghaziabad", "Ludhiana", "Agra", "Nashik", "Faridabad", 
+    "Meerut", "Rajkot", "Kalyan-Dombivli", "Vasai-Virar", "Varanasi", "Srinagar", "Aurangabad", 
+    "Dhanbad", "Amritsar", "Navi Mumbai", "Allahabad", "Ranchi", "Howrah", "Jabalpur", "Gwalior"
+]
+
+logistic_companies = [
+    "Blue Dart Express", "Delhivery", "Ecom Express", "Gati Ltd", "Safexpress", 
+    "TCI Express", "DHL India", "FedEx India", "DTDC", "Mahindra Logistics", 
+    "Rivigo", "Shadowfax", "XpressBees", "Ekart Logistics", "Shiprocket"
+]
+
+vehicle_types = ["Mini Truck", "Light Commercial Vehicle", "Heavy Truck", "Trailer", "Container", "Tempo"]
+shipment_types = ["Express", "Standard", "Economy", "Critical"]
+goods_categories = ["Electronics", "Apparel", "Industrial Parts", "FMCG", "Pharmaceuticals", "Automotive Parts", "E-commerce Parcel"]
+statuses = ["Delivered", "In Transit", "Pending", "Out for Delivery", "Delayed", "Cancelled"]
+
 
 data = []
-start_date = datetime(2026, 5, 1)
+for i in range(1, 1001):
+    shipment_id = f"IN-LOG-{10000 + i}"
+    origin = random.choice(cities)
+    destination = random.choice([c for c in cities if c != origin])
+    company = random.choice(logistic_companies)
+    vehicle = random.choice(vehicle_types)
+    shipment_type = random.choice(shipment_types)
+    goods = random.choice(goods_categories)
+    
+    # Weight in kg (1.0 to 5000.0)
+    weight = round(random.uniform(1.0, 5000.0), 2)
+    
+    # Distance estimation (simplistic random range 100km - 2500km)
+    distance_km = random.randint(100, 2500)
+    
+    # Cost calculation (Base rate + weight factor + distance factor)
+    cost_inr = round((500 + (weight * 5) + (distance_km * 2)), 2)
+    
+    status = random.choice(statuses)
+    
+    # Dates (Generated for the year 2024)
+    dispatch_day = random.randint(1, 28)
+    dispatch_month = random.randint(1, 5)
+    dispatch_date = f"2024-{dispatch_month:02d}-{dispatch_day:02d}"
+    
+    data.append([
+        shipment_id, company, origin, destination, distance_km, 
+        shipment_type, goods, weight, vehicle, cost_inr, 
+        dispatch_date, status
+    ])
 
-# Generate 1000 rows
-for i in range(1000):
-    origin, o_state = random.choice(list(cities.items()))
-    dest, d_state = random.choice([item for item in cities.items() if item[0] != origin])
-    
-    order_id = f"IN-{10001 + i}"
-    order_date = (start_date + timedelta(days=random.randint(0, 35))).strftime('%Y-%m-%d')
-    carrier = random.choice(carriers)
-    
-    # Logic to tie weight and cost loosely to shipping modes
-    mode = random.choice(modes)
-    if mode == 'Express':
-        weight = round(random.uniform(1, 100), 2)
-        cost = round(weight * random.randint(30, 50) + random.randint(200, 500), -1)
-    elif mode == 'LTL':
-        weight = random.randint(500, 8000)
-        cost = round((weight * random.uniform(3, 6)) + random.randint(2000, 5000), -2)
-    else: # FTL
-        weight = random.randint(10000, 25000)
-        cost = round(random.randint(25000, 65000), -2)
-        
-    status = random.choices(statuses, weights=[75, 18, 7], k=1)[0]
-    
-    data.append([order_id, order_date, origin, o_state, dest, d_state, carrier, mode, weight, cost, status])
 
-# Create DataFrame and save
-columns = ['Order_ID', 'Order_Date', 'Origin_City', 'State_Origin', 'Destination_City', 'State_Dest', 'Carrier', 'Shipping_Mode', 'Weight_KG', 'Shipping_Cost_INR', 'Delivery_Status']
+columns = [
+    "Shipment ID", "Logistics Provider", "Origin City", "Destination City", "Distance (km)", 
+    "Service Type", "Goods Category", "Weight (kg)", "Vehicle Type", "Shipping Cost (INR)", 
+    "Dispatch Date", "Status"
+]
+
 df = pd.DataFrame(data, columns=columns)
-df.to_excel('indian_logistics_1000.xlsx', index=False)
-print("Successfully generated 'indian_logistics_1000.xlsx' with 1,000 rows!")
+
+# Save to Excel
+output_file = "logistic dataset.xlsx"
+
+with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
+    df.to_excel(writer, index=False, sheet_name='Logistics Data')
+    
+    workbook = writer.book
+    worksheet = writer.sheets['Logistics Data']
+    
+  
+    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+    
+    header_fill = PatternFill(start_color="1F4E78", end_color="1F4E78", fill_type="solid")
+    header_font = Font(color="FFFFFF", bold=True)
+    center_aligned = Alignment(horizontal='center')
+    
+    for cell in worksheet[1]:
+        cell.fill = header_fill
+        cell.font = header_font
+        cell.alignment = center_aligned
+        
+    
+    for column in worksheet.columns:
+        max_length = 0
+        column_letter = column[0].column_letter
+        for cell in column:
+            try:
+                if len(str(cell.value)) > max_length:
+                    max_length = len(str(cell.value))
+            except:
+                pass
+        adjusted_width = (max_length + 2)
+        worksheet.column_dimensions[column_letter].width = adjusted_width
+
+print(output_file)
