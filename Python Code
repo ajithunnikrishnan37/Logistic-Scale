@@ -41,7 +41,7 @@ for i in range(1, 1001):
     # Distance estimation (simplistic random range 100km - 2500km)
     distance_km = random.randint(100, 2500)
     
-    # Cost calculation (Base rate + weight factor + distance factor)
+    # Cost calculations (Base rate + weight factor + distance factor)
     cost_inr = round((500 + (weight * 5) + (distance_km * 2)), 2)
     
     status = random.choice(statuses)
