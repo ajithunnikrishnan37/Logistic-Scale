@@ -43,7 +43,7 @@ Week 4 -Final Delivery - Creating Control Tower Dashboard View
 
 🛠 Technology Stack:
 
-rimary Data Processing: PySpark 
+primary Data Processing: PySpark 
 Storage Layer: SQL Database 
 Visualization Layer: Power BI
 Deployment/Environment: Docker or Local Standalone mode for setting up Spark.
